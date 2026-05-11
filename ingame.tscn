@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b77v5cwjv6c1d"]
+
+[ext_resource type="PackedScene" uid="uid://ms688xgjjbrm" path="res://HUD.tscn" id="1_0bpjf"]
+
+[node name="Ingame" type="Node2D" unique_id=1609467060]
+
+[node name="HUD" parent="." unique_id=395476445 instance=ExtResource("1_0bpjf")]
