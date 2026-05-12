@@ -3,6 +3,8 @@ using System;
 
 public partial class Player : Sprite2D
 {
+	[Export] public float Speed = 5f;
+
 	float _direction;
 
 	// Called when the node enters the scene tree for the first time.
@@ -13,7 +15,7 @@ public partial class Player : Sprite2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Position += new Vector2(_direction, Position.Y);
+		Position += new Vector2(_direction, Position.Y) * Speed;
 	}
 
 	/// <summary>
