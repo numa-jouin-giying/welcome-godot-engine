@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://ms688xgjjbrm"]
 
 [ext_resource type="Script" uid="uid://0cm2ksqjk4dl" path="res://scrpits/HUD.cs" id="1_k5de2"]
+[ext_resource type="Script" uid="uid://1aqesongg0ko" path="res://scrpits/HpBar.cs" id="2_efote"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_efote"]
+font_size = 64
+font_color = Color(0, 0, 0, 1)
 
 [node name="HUD" type="Control" unique_id=395476445]
 layout_mode = 3
@@ -13,15 +18,23 @@ script = ExtResource("1_k5de2")
 
 [node name="PlayerHpBar" type="ProgressBar" parent="." unique_id=1689923650]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -300.0
-offset_top = -68.0
+offset_top = -30.0
 offset_right = 300.0
-offset_bottom = -38.0
 grow_horizontal = 2
 grow_vertical = 0
 value = 50.0
+script = ExtResource("2_efote")
+Min = 0
+
+[node name="MissionLabel" type="Label" parent="." unique_id=62266010]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+text = "MISSION"
+label_settings = SubResource("LabelSettings_efote")

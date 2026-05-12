@@ -1,7 +1,17 @@
 [gd_scene format=3 uid="uid://b77v5cwjv6c1d"]
 
-[ext_resource type="PackedScene" uid="uid://ms688xgjjbrm" path="res://HUD.tscn" id="1_0bpjf"]
+[ext_resource type="PackedScene" uid="uid://ms688xgjjbrm" path="res://HUD.tscn" id="1_xc1it"]
+[ext_resource type="Script" uid="uid://n77edwk1dpi3" path="res://scrpits/Player.cs" id="2_n3qft"]
+[ext_resource type="Texture2D" uid="uid://caprobh28w31m" path="res://onepiece01_luffy.png" id="2_t5vd0"]
 
 [node name="Ingame" type="Node2D" unique_id=1609467060]
 
-[node name="HUD" parent="." unique_id=395476445 instance=ExtResource("1_0bpjf")]
+[node name="Player" type="Sprite2D" parent="." unique_id=1451313226]
+texture = ExtResource("2_t5vd0")
+script = ExtResource("2_n3qft")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1715386701]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1234567890]
+
+[node name="HUD" parent="CanvasLayer" unique_id=395476445 instance=ExtResource("1_xc1it")]
