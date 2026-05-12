@@ -14,8 +14,9 @@ public partial class HUD : Control
 	public override void _Ready()
 	{
 		_progressBar = GetNodeOrNull<ProgressBar>("PlayerHpBar");
+		_progressBar.Value = 100;
 
-		Future.DoAfter(1f, OnAttack).Forget();
+		Future.DoAfter(1f, OnAttack_HpBar, 25d).Forget();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,42 +25,37 @@ public partial class HUD : Control
 	}
 
 	/// <summary>
-	/// Tweenサンプルコード＆攻撃をされた時の実装
+	/// Tweenサンプルコード
 	/// </summary>
-	public void OnAttack()
+	/// <param name="newValue">新しい値</param>
+	public void OnAttack_HpBar(double newValue)
 	{
+		int strength = (int)Mathf.Clamp(Mathf.Abs(newValue - _progressBar.Value)
+										, _progressBar.MinValue, _progressBar.MaxValue);
+		_progressBar.Value = newValue;
+
 		var origin = _progressBar.Position;
 		var tween = CreateTween().SetParallel(true);
-		// 押される。以下ふたつは並列
-		tween
-		.TweenProperty(GetNode("PlayerHpBar")
-			, "position"
-			, _progressBar.Position + Vector2.Down * 25
-			, 0.1f)
-		.SetEase(Tween.EaseType.InOut)
-		.SetTrans(Tween.TransitionType.Elastic);
-		tween
-		.TweenProperty(GetNode("PlayerHpBar")
-			, "scale"
-			, new Vector2(0.9f, 0.9f)
-			, 0.1f)
-		.SetEase(Tween.EaseType.InOut)
-		.SetTrans(Tween.TransitionType.Elastic);
 
-		// 戻る。上の後にチェインする並列なTweenふたつ
-		tween.Chain()
-			.TweenProperty(GetNode("PlayerHpBar")
+		tween.TweenProperty(
+			GetNode("PlayerHpBar")
+			, "position"
+			, _progressBar.Position + Vector2.Left * strength * 0.1f
+			, 0.1f)
+		.SetTrans(Tween.TransitionType.Elastic);
+		// Tweenを連結
+		tween.Chain().TweenProperty(
+			GetNode("PlayerHpBar")
+			, "position"
+			, _progressBar.Position + Vector2.Right * strength * 0.1f
+			, 0.1f)
+		.SetTrans(Tween.TransitionType.Elastic);
+		// 最終的に元のPosに戻る
+		tween.Chain().TweenProperty(
+			GetNode("PlayerHpBar")
 			, "position"
 			, origin
 			, 0.1f)
-		.SetEase(Tween.EaseType.InOut)
-		.SetTrans(Tween.TransitionType.Elastic);
-		tween
-		.TweenProperty(GetNode("PlayerHpBar")
-			, "scale"
-			, Vector2.One
-			, 0.1f)
-		.SetEase(Tween.EaseType.InOut)
 		.SetTrans(Tween.TransitionType.Elastic);
 	}
 }
