@@ -17,4 +17,19 @@ public static class System_ActionEx
         action.Invoke();
         return true;
     }
+
+    /// <summary>
+    /// 内部でNULLチェックを実行
+    /// </summary>
+    /// <typeparam name="T">デリゲートへのパラメータの型</typeparam>
+    /// <param name="action">実行するデリゲート</param>
+    /// <param name="param">デリゲートへのパラメータ</param>
+    /// <returns>安全に実行できたか</returns>
+    public static bool SafeCall<T>(this Action<T> action, T param)
+    {
+        if (action is null) return false;
+
+        action.Invoke(param);
+        return true;
+    }
 }
