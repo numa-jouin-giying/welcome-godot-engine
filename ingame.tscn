@@ -3,15 +3,39 @@
 [ext_resource type="PackedScene" uid="uid://ms688xgjjbrm" path="res://HUD.tscn" id="1_xc1it"]
 [ext_resource type="Script" uid="uid://n77edwk1dpi3" path="res://scrpits/Player.cs" id="2_n3qft"]
 [ext_resource type="Texture2D" uid="uid://caprobh28w31m" path="res://onepiece01_luffy.png" id="2_t5vd0"]
+[ext_resource type="Texture2D" uid="uid://csl6or6gleiqm" path="res://onepiece13_crocodile.png" id="3_j5ksk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n3qft"]
+size = Vector2(122, 145)
 
 [node name="Ingame" type="Node2D" unique_id=1609467060]
 
-[node name="Player" type="Sprite2D" parent="." unique_id=1451313226]
-texture = ExtResource("2_t5vd0")
-script = ExtResource("2_n3qft")
+[node name="Enemy" type="RigidBody2D" parent="." unique_id=904242093]
+position = Vector2(445, 0)
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 4
+
+[node name="Image" type="Sprite2D" parent="Enemy" unique_id=882454558]
+texture = ExtResource("3_j5ksk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1665986381]
+position = Vector2(-5, 4.5)
+shape = SubResource("RectangleShape2D_n3qft")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1715386701]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1234567890]
 
 [node name="HUD" parent="CanvasLayer" unique_id=395476445 instance=ExtResource("1_xc1it")]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1569179465]
+script = ExtResource("2_n3qft")
+Speed = 50.0
+
+[node name="Image" type="Sprite2D" parent="Player" unique_id=1451313226]
+texture = ExtResource("2_t5vd0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1305555417]
+position = Vector2(-4, 4.5)
+shape = SubResource("RectangleShape2D_n3qft")

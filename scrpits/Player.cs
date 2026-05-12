@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Player : Sprite2D
+public partial class Player : CharacterBody2D
 {
 	[Export] public float Speed = 5f;
 
@@ -12,10 +12,16 @@ public partial class Player : Sprite2D
 	{
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
-		Position += new Vector2(_direction, Position.Y) * Speed;
+		Velocity = new Vector2(_direction * Speed, Velocity.Y);
+		MoveAndSlide();
+
+		for (int i = 0; i < GetSlideCollisionCount(); i++)
+		{
+			var collision = GetSlideCollision(i);
+			GD.Print(GDLogString.LOG + "衝突: ", ((Node)collision.GetCollider()).Name);
+		}
 	}
 
 	/// <summary>
